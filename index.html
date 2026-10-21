@@ -442,6 +442,7 @@ select.sel { font: 700 .92rem var(--f-body); padding: 8px 10px; border-radius: 1
       <div class="kb-actions">
         <button type="button" id="kbClear"><span class="fr">Tout effacer</span><span class="en">Clear all</span></button>
         <button type="button" id="kbCopy"><span class="fr">Copier le texte</span><span class="en">Copy text</span></button>
+        <button type="button" id="kbCopyVis"><span class="fr">Copier pour Word</span><span class="en">Copy for Word</span></button>
         <button type="button" id="kbImage"><span class="fr">Créer une image</span><span class="en">Make an image</span></button>
       </div>
       <div class="kb" id="kb"></div>
@@ -532,7 +533,7 @@ select.sel { font: 700 .92rem var(--f-body); padding: 8px 10px; border-radius: 1
     <div class="font-card">
       <div>
         <h3><span class="fr">La police NÈNÈ</span><span class="en">The NÈNÈ font</span></h3>
-        <p class="note"><span class="fr">Pour lire et écrire le NÈNÈ sur ordinateur (1 709 glyphes, formes liées et tons compris).</span><span class="en">To read and write NÈNÈ on a computer (1,709 glyphs, joined forms and tones included).</span></p>
+        <p class="note"><span class="fr">Pour lire et écrire le NÈNÈ sur ordinateur (1 709 glyphes, tons compris). Les lettres se lient toutes seules dans Word, LibreOffice et les pages web. Pour Word ou LibreOffice, écrivez avec le clavier en ligne puis touchez « Copier pour Word ».</span><span class="en">To read and write NÈNÈ on a computer (1,709 glyphs, tones included). Letters join automatically in Word, LibreOffice and web pages. For Word or LibreOffice, type with the online keyboard, then tap "Copy for Word".</span></p>
       </div>
       <span class="nn" id="fontSample"></span>
       <a class="btn btn-main" href="fonts/nene_regular.ttf"><span class="fr">Télécharger la police (.ttf)</span><span class="en">Download the font (.ttf)</span></a>
@@ -857,6 +858,12 @@ function render() {
   c.dataset.placeholder = tr("Touchez les lettres du clavier ci-dessous…", "Tap the keyboard letters below…");
 }
 $("#kbClear").addEventListener("click", () => { atoms = []; render(); $("#shot").hidden = true; });
+$("#kbCopyVis").addEventListener("click", async () => {
+  const t = logicalText(); if (!t) return;
+  const v = t.split("\n").map(l => [...l].reverse().join("")).join("\n"); // ordre visuel : Word et LibreOffice affichent ces caractères de gauche à droite
+  try { await navigator.clipboard.writeText(v); flash(tr("Copié pour Word : collez, puis alignez le texte à droite.", "Copied for Word: paste, then right-align the text.")); }
+  catch (e) { flash(tr("Copie impossible sur cet appareil.", "Copy is not possible on this device.")); }
+});
 $("#kbCopy").addEventListener("click", async () => {
   const t = logicalText(); if (!t) return;
   try { await navigator.clipboard.writeText(t); flash(tr("Texte copié.", "Text copied.")); }
