@@ -1,0 +1,10 @@
+# Mise en cache longue : un visiteur qui revient ne retélécharge pas les images, la police ni les PDF.
+# Cela réduit la bande passante consommée (et donc les crédits Netlify).
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/imprimables/*
+  Cache-Control: public, max-age=2592000
+/apk/*
+  Cache-Control: public, max-age=604800

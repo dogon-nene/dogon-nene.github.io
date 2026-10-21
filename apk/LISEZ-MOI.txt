@@ -1,0 +1,5 @@
+Placez ici les APK signés, avec exactement ces noms :
+  nene-clavier.apk   (NÈNÈ Clavier, com.maigus.nenekeyboard)
+  nene-calcul.apk    (NÈNÈ Calcul, com.maigus.nenecalculator)
+  nene-ecole.apk     (NÈNÈ École, com.maigus.neneecole)
+Les boutons « Télécharger (APK) » du site pointent vers ces fichiers.
